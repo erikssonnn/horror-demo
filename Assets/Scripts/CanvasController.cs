@@ -12,16 +12,19 @@ public class CanvasController : MonoBehaviour {
     private ConsoleController consoleController = null;
     private PlayerController playerController = null;
     private MovementController movementController = null;
+    private CharacterController characterController = null;
+    private bool fadeRunning = false;
 
     private void Start() {
         consoleController = FindObjectOfType<ConsoleController>();
         playerController = FindObjectOfType<PlayerController>();
         movementController = FindObjectOfType<MovementController>();
+        characterController = movementController.GetComponent<CharacterController>();
         ShowText("");
     }
 
     private IEnumerator HideText() {
-        yield return new WaitForSeconds(2.0f);
+        yield return new  WaitForSeconds(2.0f);
         ShowText("");
     }
 
@@ -41,11 +44,11 @@ public class CanvasController : MonoBehaviour {
         if (!consoleController.Debug) return;
         string debugString = "Sanity: " + SanityController.instance.globalSanity.ToString("F2") + 
                              "\nHealth: " + playerController.globalHealth + 
-                             "\nVelocity: " + movementController.GetComponent<CharacterController>().velocity.magnitude.ToString("F2");
+                             "\nVelocity: " + characterController.velocity.magnitude.ToString("F2");
         GUI.Label(new Rect(10, 10, 100, 100), debugString);
     }
 
-    public IEnumerator EnvFade(Color color, float duration) {
+    public static IEnumerator EnvFade(Color color, float duration) {
         Color startAmbientColor = RenderSettings.ambientLight;
         Color startFogColor = RenderSettings.fogColor;
         float elapsedTime = 0f;
@@ -62,8 +65,14 @@ public class CanvasController : MonoBehaviour {
         RenderSettings.fogColor = color;
     }
 
-
-    public IEnumerator Fade(float inSpeed, float outSpeed, float duration) {
+    public void RunFade(float inSpeed, float outSpeed, float duration) {
+        if (fadeRunning)
+            return;
+        StartCoroutine(Fade(inSpeed, outSpeed, duration));
+    }
+    
+    private IEnumerator Fade(float inSpeed, float outSpeed, float duration) {
+        fadeRunning = true;
         fadeImg.color = new Color(0, 0, 0, 0);
         float alpha = fadeImg.color.a;
 
@@ -83,5 +92,6 @@ public class CanvasController : MonoBehaviour {
             fadeImg.color = new Color(0, 0, 0, alpha);
             yield return null;
         }
+        fadeRunning = false;
     }
 }

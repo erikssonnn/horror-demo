@@ -44,7 +44,7 @@ public class SanityController : MonoBehaviour {
             postProcess.globalVignette.amount = vignetteAmount;
         }
 
-        canvasController.StartCoroutine(canvasController.Fade(1.5f, 1.5f, 0.25f));
+        canvasController.RunFade(1.5f, 1.5f, 0.25f);
         // screenShake.StartCoroutine(screenShake.Shake(0.75f, 1.75f));
 
         //die out of sanity being low

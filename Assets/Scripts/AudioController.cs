@@ -40,7 +40,7 @@ public class AudioController : MonoBehaviour {
         }
     }
 
-    private void PlayAmbience(AudioClip clip) {
+    public void PlayAmbience(AudioClip clip) {
         ambienceSource.clip = clip;
         ambienceSource.loop = true;
         ambienceSource.Stop();

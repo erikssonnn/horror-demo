@@ -9,7 +9,7 @@ public class ConsoleController : MonoBehaviour {
     [SerializeField] private GameObject console = null;
     [SerializeField] private Text output = null;
     [SerializeField] private Text inputText= null;
-    private static readonly string[] commands = { "debug", "god", "speed", "cspeed", "noclip", "sanity"};
+    private static readonly string[] commands = { "debug", "speed", "cspeed", "noclip", "sanity"};
     private bool active = false;
     private InputKey input = new InputKey();
     private MovementController mc = null;
@@ -125,9 +125,6 @@ public class ConsoleController : MonoBehaviour {
                 Camera cam = Camera.main;
                 cam.cullingMask = value == 1 ? cam.cullingMask |= (1 << LayerMask.NameToLayer("debug")) : cam.cullingMask &= ~(1 << LayerMask.NameToLayer("debug"));
                 break;
-            case "god":
-                //VI HAR INGET HP ÄN LOL
-                break;
             case "speed":
                 mc.mSpeed = value;
                 break;
@@ -144,6 +141,7 @@ public class ConsoleController : MonoBehaviour {
                 SanityController.instance.ChangeSanity(value);
                 break;
             default:
+                UnityEngine.Debug.LogError("SWITCH CASE FELL BACK TO DEFAULT");
                 break;
         }
     }

@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum EventType { CLOSE_DOOR, LOCK_DOOR, ENABLE_OBJECT, SET_ANIMATION_BOOL, PLAY_SOUND, SET_ENV_COLOR, SET_SOUND }
+public enum EventType { CLOSE_DOOR, LOCK_DOOR, ENABLE_OBJECT, SET_ANIMATION_BOOL, PLAY_SOUND, SET_ENV_COLOR, SET_SOUND, KILL, PLAY_AMBIENCE }
 
 [System.Serializable]
 public class Event {
     public EventType eventType = EventType.CLOSE_DOOR;
     public GameObject obj = null;
+    public float delay = 0.0f;
     public bool onOff;
     public string animationName = "";
     public AudioClip audioClip = null;
@@ -32,11 +33,12 @@ public class EventObject : MonoBehaviour {
 
     private void OnTriggerEnter(Collider col) {
         if (!col.CompareTag("Player")) return;
-        PlayEvent();
+        StartCoroutine(PlayEvent());
     }
 
-    private void PlayEvent() {
+    private IEnumerator PlayEvent() {
         foreach (Event e in events) {
+            yield return new WaitForSeconds(e.delay);
             switch (e.eventType) {
                 case EventType.CLOSE_DOOR:
                     if (e.obj == null) continue;
@@ -62,17 +64,27 @@ public class EventObject : MonoBehaviour {
                     FindObjectOfType<AudioController>().PlayAudio(e.audioClip, -0.2f, 0.2f, 2f, e.obj.transform);
                     break;
                 case EventType.SET_ENV_COLOR:
-                    canvasController.StartCoroutine(canvasController.Fade(3f, 3f, 0.1f));
-                    canvasController.StartCoroutine(canvasController.EnvFade(e.envColor, 1f));
+                    canvasController.RunFade(3f, 3f, 0.1f);
+                    canvasController.StartCoroutine(CanvasController.EnvFade(e.envColor, 1f));
                     screenShake.StartCoroutine(screenShake.Shake(2.0f, 2.0f));
                     break;
                 case EventType.SET_SOUND:
                     FindObjectOfType<AudioController>().UpdateStepSound();
                     break;
+                case EventType.KILL:
+                    FindObjectOfType<PlayerController>().ChangeHealth(-200000);
+                    break;
+                case EventType.PLAY_AMBIENCE:
+                    if(e.audioClip == null) continue;
+                    FindObjectOfType<AudioController>().PlayAmbience(e.audioClip);
+                    break;
+                default:
+                    Debug.LogError("DEFAULT FROM ENUM, SHOULD NOT HAPPEN");
+                    break;
             }
-
         }
-        
-        gameObject.SetActive(false);
+
+        var col = gameObject.GetComponent<Collider>();
+        if(col.enabled) col.enabled = false;
     }
 }

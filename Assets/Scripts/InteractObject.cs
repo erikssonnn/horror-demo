@@ -98,7 +98,7 @@ public class InteractObject : MonoBehaviour {
         muted = false;
         mc.enabled = false;
         mc.GetComponent<CharacterController>().enabled = false;
-        canvasController.StartCoroutine(canvasController.Fade(1f, 1f, 1f));
+        canvasController.RunFade(1f, 1f, 1f);
         yield return new WaitForSeconds(1f);
         if (firstHatch) {
             particleEffect.SetActive(true);
