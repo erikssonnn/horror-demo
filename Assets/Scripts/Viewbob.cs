@@ -37,7 +37,7 @@ public class Viewbob : MonoBehaviour {
 
         if (transform.localPosition.y <= -0.04f && !down) {
             down = true;
-            am.PlayAudio(am.GetStepSound(), -0.1f, 0.3f, 0.55f, null);
+            am.PlayAudio(am.GetStepSound(), -0.1f, 0.3f, null);
         } else if (transform.localPosition.y > -0.03f) {
             down = false;
         }

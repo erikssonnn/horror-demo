@@ -61,9 +61,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4858db3a02042a4ab42ed9ee33866d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  img: {fileID: 0}
+  interactImg: {fileID: 0}
   fadeImg: {fileID: 0}
   text: {fileID: 0}
+  pauseObj: {fileID: 0}
 --- !u!114 &1420647782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,6 +88,7 @@ MonoBehaviour:
     ENTER: 13
     PREV_COMMAND: 273
     CROUCH: 306
+    PAUSE: 27
 --- !u!114 &173508656
 MonoBehaviour:
   m_ObjectHideFlags: 0

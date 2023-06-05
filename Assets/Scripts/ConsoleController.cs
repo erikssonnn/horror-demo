@@ -126,7 +126,7 @@ public class ConsoleController : MonoBehaviour {
                 cam.cullingMask = value == 1 ? cam.cullingMask |= (1 << LayerMask.NameToLayer("debug")) : cam.cullingMask &= ~(1 << LayerMask.NameToLayer("debug"));
                 break;
             case "speed":
-                mc.mSpeed = value;
+                mc.globalSpeed = value;
                 break;
             case "noclip":
                 mc.enabled = !b;

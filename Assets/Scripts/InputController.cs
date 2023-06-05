@@ -14,6 +14,7 @@ public struct InputKey {
     public KeyCode ENTER;
     public KeyCode PREV_COMMAND;
     public KeyCode CROUCH;
+    public KeyCode PAUSE;
 }
 
 public class InputController : MonoBehaviour {

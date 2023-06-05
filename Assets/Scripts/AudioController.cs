@@ -25,16 +25,14 @@ public class AudioController : MonoBehaviour {
         wetStep = true;
     }
 
-    public void PlayAudio(AudioClip clip, float minP, float maxP, float volume, Transform origin) {
+    public void PlayAudio(AudioClip clip, float minP, float maxP, Transform origin) {
         if (origin != null) {
             soundObject.transform.position = origin.position;
             AudioSource s = soundObject.GetComponent<AudioSource>();
-            s.volume = volume;
             s.pitch = 1.0f + Random.Range(minP, maxP);
             s.PlayOneShot(clip);
         }
         else {
-            source.volume = volume;
             source.pitch = 1.0f + Random.Range(minP, maxP);
             source.PlayOneShot(clip);
         }

@@ -61,7 +61,7 @@ public class EventObject : MonoBehaviour {
                     break;
                 case EventType.PLAY_SOUND:
                     if(e.audioClip == null) continue;
-                    FindObjectOfType<AudioController>().PlayAudio(e.audioClip, -0.2f, 0.2f, 2f, e.obj.transform);
+                    FindObjectOfType<AudioController>().PlayAudio(e.audioClip, -0.2f, 0.2f, e.obj.transform);
                     break;
                 case EventType.SET_ENV_COLOR:
                     canvasController.RunFade(3f, 3f, 0.1f);

@@ -38,13 +38,13 @@ public class MovementController : MonoBehaviour {
         cc = GetComponent<CharacterController>();
     }
 
-    public float mSpeed {
-        set {
-            movementSpeed = value;
-        }
-        get {
-            return movementSpeed;
-        }
+    public float globalMouseSensitivity {
+        set => mouseSensitivity = value;
+    }
+
+    public float globalSpeed {
+        set => movementSpeed = value;
+        get => movementSpeed;
     }
 
     private void Movement() {

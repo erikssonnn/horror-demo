@@ -2,25 +2,66 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour {
-    [SerializeField] private Image img = null;
+    [SerializeField] private Image interactImg = null;
     [SerializeField] private Image fadeImg = null;
     [SerializeField] private Text text = null;
+    [SerializeField] private GameObject pauseObj = null;
+    [SerializeField] private AudioSource musicSource = null;
 
+    private AudioSource[] audioSources = null;
     private ConsoleController consoleController = null;
     private PlayerController playerController = null;
     private MovementController movementController = null;
     private CharacterController characterController = null;
     private bool fadeRunning = false;
+    private bool paused = false;
+    private InputKey input = new InputKey();
 
     private void Start() {
+        input = InputController.Instance.InputKey;
         consoleController = FindObjectOfType<ConsoleController>();
         playerController = FindObjectOfType<PlayerController>();
         movementController = FindObjectOfType<MovementController>();
         characterController = movementController.GetComponent<CharacterController>();
+        audioSources = FindObjectsOfType<AudioSource>();
+        paused = false;        
         ShowText("");
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(input.PAUSE)) {
+            Pause();
+        }
+    }
+
+    private void Pause() {
+        paused = !paused;
+        movementController.enabled = !paused;
+        consoleController.enabled = !paused;
+        Time.timeScale = paused ? 0.0f : 1.0f;
+        pauseObj.SetActive(paused);
+        MouseController.instance.ToggleMouse();
+    }
+
+    public void OnVolumeChange(Slider slider) {
+        float temp = musicSource.volume;
+        foreach (AudioSource source in audioSources) {
+            source.volume = slider.value;
+        }
+
+        musicSource.volume = temp;
+    }
+    
+    public void OnMusicChange(Slider slider) {
+        musicSource.volume = slider.value;
+    }
+    
+    public void OnSensitivityChange(Slider slider) {
+        movementController.globalMouseSensitivity = slider.value;
     }
 
     private IEnumerator HideText() {
@@ -37,7 +78,7 @@ public class CanvasController : MonoBehaviour {
     }
 
     public void ToggleHand (bool onOff) {
-        img.enabled = onOff;
+        interactImg.enabled = onOff;
     }
 
     private void OnGUI() {
