@@ -24293,7 +24293,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: gamecontroller
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5741271573505301419, guid: 6dd3a5aaae4d54245994ff163be96e96, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6dd3a5aaae4d54245994ff163be96e96, type: 3}
 --- !u!1 &5741271573505301418 stripped
 GameObject:
@@ -24311,6 +24312,10 @@ PrefabInstance:
       propertyPath: deathPanel
       value: 
       objectReference: {fileID: 1872502710}
+    - target: {fileID: 1711931484, guid: 38f3a63a54939e5458cc63fce8a33537, type: 3}
+      propertyPath: flashlight
+      value: 
+      objectReference: {fileID: 565101425}
     - target: {fileID: 6302368348597883561, guid: 38f3a63a54939e5458cc63fce8a33537, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -24359,6 +24364,10 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6302368348597883563, guid: 38f3a63a54939e5458cc63fce8a33537, type: 3}
+      propertyPath: stepSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 662c87c2300350d4883042027158068f, type: 3}
     - target: {fileID: 6302368348597883563, guid: 38f3a63a54939e5458cc63fce8a33537, type: 3}
       propertyPath: soundObject
       value: 

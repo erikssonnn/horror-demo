@@ -139,6 +139,7 @@ public class ConsoleController : MonoBehaviour {
                 break;
             case "sanity":
                 SanityController.instance.ChangeSanity(value);
+                ToggleConsole();
                 break;
             default:
                 UnityEngine.Debug.LogError("SWITCH CASE FELL BACK TO DEFAULT");
